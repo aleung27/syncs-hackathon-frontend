@@ -11,6 +11,9 @@ import allen from "../static/allen.png";
 const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
+  const RADIUS = 150;
+
+  const avatars = [];
 
   useEffect(() => {
     const socket = io(ADDRESS);
@@ -42,7 +45,7 @@ const Main = ({ username, ADDRESS }) => {
           if (i === id) {
             // Note to alter the 15's when using diff images to centre
             ref.beginPath();
-            ref.arc(data[i].x + 15, data[i].y + 15, 150, 0, 2 * Math.PI);
+            ref.arc(data[i].x + 15, data[i].y + 15, RADIUS, 0, 2 * Math.PI);
             ref.strokeStyle = "lightblue";
             ref.stroke();
           }
@@ -82,7 +85,7 @@ const Main = ({ username, ADDRESS }) => {
         width={WIDTH}
         height={HEIGHT}
         style={{
-          border: "5px solid",
+          border: "0px solid",
         }}
       ></canvas>
       <div className="sidebar">
