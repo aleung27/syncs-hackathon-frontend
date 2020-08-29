@@ -3,8 +3,7 @@ import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
 import "../scss/Main.scss";
 
-const Main = ({ username }) => {
-  const ADDRESS = "http://localhost:3030";
+const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
 

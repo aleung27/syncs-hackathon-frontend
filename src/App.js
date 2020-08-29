@@ -5,6 +5,7 @@ import Main from "./Views/Main";
 
 const App = () => {
   const [username, setUsername] = useState(null);
+  const ADDRESS = "http://localhost:3030";
 
   const modifyUsername = (val) => {
     setUsername(val);
@@ -20,13 +21,16 @@ const App = () => {
               {...props}
               modifyUsername={modifyUsername}
               username={username}
+              ADDRESS={ADDRESS}
             />
           )}
           exact
         />
         <Route
           path="/chat"
-          render={(props) => <Main {...props} username={username} />}
+          render={(props) => (
+            <Main {...props} username={username} ADDRESS={ADDRESS} />
+          )}
         />
       </Switch>
     </main>

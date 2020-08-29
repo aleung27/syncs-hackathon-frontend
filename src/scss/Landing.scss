@@ -8,6 +8,13 @@
     background-color: silver;
 }
 
+.alert {
+    position: fixed;
+    display: block;
+    width: 100vw;
+    bottom: 0%;
+}
+
 .form-label {
     padding: 20;
     margin: auto;
