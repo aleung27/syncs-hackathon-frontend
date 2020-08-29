@@ -6,6 +6,7 @@ import "../scss/Main.scss";
 import sean from "../static/sean.png";
 import judd from "../static/judd.jpg";
 import eva from "../static/eva.jpg";
+import allen from "../static/allen.png";
 
 const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
@@ -90,15 +91,15 @@ const Main = ({ username, ADDRESS }) => {
         </div>
         <div className="profile">
           <img src={judd} alt="" />
-          <span className="userName">Sean Gong</span>
+          <span className="userName">Judd Zhan</span>
         </div>
         <div className="profile">
           <img src={eva} alt="" />
-          <span className="userName">Sean Gong</span>
+          <span className="userName">Eva Liu</span>
         </div>
         <div className="profile">
-          <img src={sean} alt="" />
-          <span className="userName">Sean Gong</span>
+          <img src={allen} alt="" />
+          <span className="userName">Allen Hui</span>
         </div>
       </div>
     </div>
