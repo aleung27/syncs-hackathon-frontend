@@ -32,13 +32,26 @@ function pageReady() {
                 socket.on('connect', function(){
 
                     socketId = socket.id;
-
+                    window.socketId = socket.id;  // Save voice socket (accessed in main.js)
                     socket.on('user-left', function(id){
                         var audio = document.querySelector('[data-socket="'+ id +'"]');
                         var parentDiv = audio.parentElement;
                         audio.parentElement.parentElement.removeChild(parentDiv);
                     });
 
+                    socket.on('volume-change', function(amounts){
+                        console.log(amounts);
+                        for (var id in amounts) {
+                            var amount = amounts[id];
+                            var audio = document.querySelector('[data-socket="'+ id +'"]');
+                            if (audio) {
+                                audio.volume = amount;
+                                console.log("Volume: " + amount);
+                            }
+                            
+                        }
+
+                    });
 
                     socket.on('user-joined', function(id, count, clients){
                         clients.forEach(function(socketListId) {

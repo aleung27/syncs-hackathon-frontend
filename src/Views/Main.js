@@ -15,12 +15,19 @@ import Classroom from "../static/classroom.png";
 import Atlassian from "../static/atlassian.png";
 import Hackathon from "../static/hackathon.png";
 import Navbar from "../static/navbar.png";
+//import "./global.js";
+//const socket;
+
 
 const Main = ({ username, background, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
   const RADIUS = 150;
+  console.log("IDDDDD"+window.socketId);
   const socket = io(ADDRESS);
+  
+  // const uuid = createUUID();
+  //this.context.uuid = createUUID();
 
   const [currentComment, setCurrentComment] = useState("");
   const [comments, setComments] = useState([
@@ -39,6 +46,7 @@ const Main = ({ username, background, ADDRESS }) => {
   useEffect(() => {
     let id = null;
     const ref = document.getElementById("mainCanvas").getContext("2d");
+    socket.emit("user-con", window.socketId); // Avoid duplicate, and connect to appropriate frontend socket
 
     socket.on("id", (data) => {
       id = data;
