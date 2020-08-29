@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import "../scss/Landing.scss";
 
-const Landing = ({ modifyUsername, username, ADDRESS }) => {
+const Landing = ({ modifyUsername, modifyBackground, username, ADDRESS }) => {
   const [roomCode, setRoomCode] = useState(null);
   const [isRedirect, setIsRedirect] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -56,6 +56,18 @@ const Landing = ({ modifyUsername, username, ADDRESS }) => {
             <Form.Control placeholder="Enter a room code" />
           </Form.Group>
         </Form>
+
+        <Form.Group
+          controlId="background"
+          onChange={(e) => modifyBackground(e.target.value)}
+        >
+          <Form.Label>Background</Form.Label>
+          <Form.Control as="select">
+            <option>Classroom</option>
+            <option>Atlassian</option>
+            <option>Hackathon</option>
+          </Form.Control>
+        </Form.Group>
 
         <Button variant="primary" type="submit" onClick={() => redirect()}>
           Submit

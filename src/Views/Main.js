@@ -8,12 +8,14 @@ import judd from "../static/judd.jpg";
 import eva from "../static/eva.jpg";
 import allen from "../static/allen.png";
 
-const Main = ({ username, ADDRESS }) => {
+import Classroom from "../static/classroom.png";
+import Atlassian from "../static/atlassian.png";
+import Hackathon from "../static/hackathon.png";
+
+const Main = ({ username, background, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
   const RADIUS = 150;
-
-  const avatars = [];
 
   useEffect(() => {
     const socket = io(ADDRESS);
@@ -28,6 +30,17 @@ const Main = ({ username, ADDRESS }) => {
     // When receive position, render the images
     socket.on("position", (data) => {
       ref.clearRect(0, 0, WIDTH, HEIGHT);
+
+      let bkg = new Image(1200, 800);
+      if (background === "Hackathon") {
+        bkg.src = Hackathon;
+      } else if (background === "Atlassian") {
+        bkg.src = Atlassian;
+      } else {
+        bkg.src = Classroom;
+      }
+
+      bkg.onload = () => ref.drawImage(bkg, 0, 0, 1200, 800);
 
       for (let i = 0; i < data.length; i++) {
         let img = new Image(5, 5);
@@ -80,14 +93,8 @@ const Main = ({ username, ADDRESS }) => {
 
   return (
     <div className="main">
-      <canvas
-        id="mainCanvas"
-        width={WIDTH}
-        height={HEIGHT}
-        style={{
-          border: "0px solid",
-        }}
-      ></canvas>
+      <div className="chat"></div>
+      <canvas id="mainCanvas" width={WIDTH} height={HEIGHT}></canvas>
       <div className="sidebar">
         <div className="profile">
           <img src={sean} alt="" />

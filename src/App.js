@@ -5,10 +5,15 @@ import Main from "./Views/Main";
 
 const App = () => {
   const [username, setUsername] = useState(null);
+  const [background, setBackground] = useState("Hackathon");
   const ADDRESS = "http://localhost:3030";
 
   const modifyUsername = (val) => {
     setUsername(val);
+  };
+
+  const modifyBackground = (val) => {
+    setBackground(val);
   };
 
   return (
@@ -22,6 +27,7 @@ const App = () => {
               modifyUsername={modifyUsername}
               username={username}
               ADDRESS={ADDRESS}
+              modifyBackground={modifyBackground}
             />
           )}
           exact
@@ -29,7 +35,12 @@ const App = () => {
         <Route
           path="/chat"
           render={(props) => (
-            <Main {...props} username={username} ADDRESS={ADDRESS} />
+            <Main
+              {...props}
+              username={username}
+              ADDRESS={ADDRESS}
+              background={background}
+            />
           )}
         />
       </Switch>
