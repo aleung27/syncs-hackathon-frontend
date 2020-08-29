@@ -3,6 +3,9 @@ import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
 import "../scss/Main.scss";
 
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
 import sean from "../static/sean.png";
 import judd from "../static/judd.jpg";
 import eva from "../static/eva.jpg";
@@ -16,15 +19,33 @@ const Main = ({ username, background, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
   const RADIUS = 150;
+  const socket = io(ADDRESS);
+
+  const [currentComment, setCurrentComment] = useState("");
+  const [comments, setComments] = useState([
+    {
+      username: "Adam",
+      comment: "Try out the comment system!",
+    },
+  ]);
+
+  const postComment = (e) => {
+    e.preventDefault();
+    socket.emit("comment", { username: username, comment: currentComment });
+    setCurrentComment("");
+  };
 
   useEffect(() => {
-    const socket = io(ADDRESS);
     let id = null;
     const ref = document.getElementById("mainCanvas").getContext("2d");
 
     socket.on("id", (data) => {
       id = data;
       socket.emit("setName", { username: username, id: id });
+    });
+
+    socket.on("getComment", (data) => {
+      setComments(data);
     });
 
     // When receive position, render the images
@@ -68,7 +89,6 @@ const Main = ({ username, background, ADDRESS }) => {
 
     // Handle the key presses
     document.addEventListener("keypress", (e) => {
-      console.log(id);
       if (e.keyCode === 100) {
         socket.emit("move", { id: id, direction: "right" });
       }
@@ -93,7 +113,38 @@ const Main = ({ username, background, ADDRESS }) => {
 
   return (
     <div className="main">
-      <div className="chat"></div>
+      <div className="chat">
+        <span style={{ fontSize: "large" }}>Comments</span>
+        {comments
+          ? comments.map((v) => {
+              return (
+                <div className="comments" key={v.comment}>
+                  <span style={{ fontWeight: "bold" }}>
+                    {v.username + ": "}
+                  </span>
+                  <span>{v.comment}</span>
+                </div>
+              );
+            })
+          : null}
+        <Form>
+          <Form.Group
+            controlId="post"
+            onChange={(e) => setCurrentComment(e.target.value)}
+          >
+            <Form.Control placeholder="Type your comment here!" />
+          </Form.Group>
+
+          <Button
+            variant="primary"
+            type="submit"
+            style={{ float: "right" }}
+            onClick={(e) => postComment(e)}
+          >
+            Post!
+          </Button>
+        </Form>
+      </div>
       <canvas id="mainCanvas" width={WIDTH} height={HEIGHT}></canvas>
       <div className="sidebar">
         <div className="profile">
