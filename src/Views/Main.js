@@ -31,6 +31,15 @@ const Main = ({ username, ADDRESS }) => {
             ref.fillText(data[i].username, data[i].x, data[i].y - 5);
           }
           ref.drawImage(img, data[i].x, data[i].y);
+
+          // Draw the circle for us only
+          if (i == id) {
+            // Note to alter the 15's when using diff images to centre
+            ref.beginPath();
+            ref.arc(data[i].x + 15, data[i].y + 15, 150, 0, 2 * Math.PI);
+            ref.strokeStyle = "lightblue";
+            ref.stroke();
+          }
         };
       }
     });
