@@ -13,7 +13,10 @@ const Main = ({ username }) => {
     let id = null;
     const ref = document.getElementById("mainCanvas").getContext("2d");
 
-    socket.on("id", (data) => (id = data));
+    socket.on("id", (data) => {
+      id = data;
+      socket.emit("setName", { username: username, id: id });
+    });
 
     // When receive position, render the images
     socket.on("position", (data) => {
@@ -24,6 +27,10 @@ const Main = ({ username }) => {
         img.src = "https://www.w3schools.com/images/lamp.jpg";
 
         img.onload = () => {
+          if (data[i].username) {
+            ref.font = "15px Raleway";
+            ref.fillText(data[i].username, data[i].x, data[i].y - 5);
+          }
           ref.drawImage(img, data[i].x, data[i].y);
         };
       }
