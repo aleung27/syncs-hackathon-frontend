@@ -18,7 +18,7 @@ The frontend is constructed using ReactJS along with various packages such as:
 - Bootstrap for some upstanding UI
 - Axios for some awesome API calls
 - Socket.IO for some nice networking
-- React Router for soem neat navigation
+- React Router for some neat navigation
 - WebRTC for some vivacious voice connection
 
 and more... Huge shout out!
