@@ -10,7 +10,10 @@ import eva from "../static/eva.jpg";
 const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
-
+  var bgURL = "";
+  var width = 0;
+  var height = 0;
+  var radius = 120;
   var users = [];
   var images = [];
 
@@ -26,40 +29,45 @@ const Main = ({ username, ADDRESS }) => {
 
     // On new user connecting
     socket.on("image", (data) => {
-      users = data;
-     
+      users = data.userData;
+      bgURL = data.bgURL;
+      width = data.width;
+      height = data.height;
+      images = data.image;
       images = [];
-      for (var i = 0; i < data.length; i++) {
+      for (var i = 0; i < users.length; i++) {
         var tempimg = new Image(5, 5);
         tempimg.src = users[i].userImg;
         images.push(tempimg);
       }
-      console.log(images)
     })
 
     // When receive position, render the images
     socket.on("position", (data) => {
       ref.clearRect(0, 0, WIDTH, HEIGHT);
-
+      let bgImg = new Image(width, height);
+      bgImg.src = bgURL;
+      ref.drawImage(bgImg, 0, 0);
       for (let i = 0; i < data.length; i++) {
-        let img = images[i];
-        console.log("Image" + i + "  " + img)
+        //let img = images[i];
+        //console.log("Image" + i + "  " + img)
+        var img = images[i];
         //img.onload = () => {
           if (data[i].username) {
             ref.font = "15px Raleway";
             ref.fillText(data[i].username, data[i].x, data[i].y - 5);
           }
-          ref.drawImage(img, data[i].x, data[i].y);
+          ref.drawImage(images[i], data[i].x, data[i].y);
 
           // Draw the circle for us only
           if (i === id) {
             // Note to alter the 15's when using diff images to centre
             ref.beginPath();
-            ref.arc(data[i].x + 15, data[i].y + 15, 150, 0, 2 * Math.PI);
+            ref.arc(data[i].x + 15, data[i].y + 15, radius, 0, 2 * Math.PI);
             ref.strokeStyle = "lightblue";
             ref.stroke();
           }
-        //};
+       // };
       }
     });
 
@@ -95,7 +103,7 @@ const Main = ({ username, ADDRESS }) => {
         width={WIDTH}
         height={HEIGHT}
         style={{
-          border: "5px solid",
+          border: "0px solid",
         }}
       ></canvas>
       <div className="sidebar">
