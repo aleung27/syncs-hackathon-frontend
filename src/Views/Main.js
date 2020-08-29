@@ -14,6 +14,7 @@ import allen from "../static/allen.png";
 import Classroom from "../static/classroom.png";
 import Atlassian from "../static/atlassian.png";
 import Hackathon from "../static/hackathon.png";
+import Navbar from "../static/navbar.png";
 
 const Main = ({ username, background, ADDRESS }) => {
   const WIDTH = 1200;
@@ -114,6 +115,11 @@ const Main = ({ username, background, ADDRESS }) => {
 
   return (
     <div className="main">
+      <img
+        src={Navbar}
+        alt=""
+        style={{ width: "100vw", position: "fixed", top: "0" }}
+      />
       <div className="chat">
         <span style={{ fontSize: "large" }}>Comments</span>
         {comments

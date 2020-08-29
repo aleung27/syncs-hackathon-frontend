@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import Alert from "react-bootstrap/Alert";
 import "../scss/Landing.scss";
 
+import Logo from "../static/logo.png";
+
 const Landing = ({ modifyUsername, modifyBackground, username, ADDRESS }) => {
   const [roomCode, setRoomCode] = useState(null);
   const [isRedirect, setIsRedirect] = useState(false);
@@ -39,6 +41,7 @@ const Landing = ({ modifyUsername, modifyBackground, username, ADDRESS }) => {
             Invalid Room Code or Username!
           </Alert>
         ) : null}
+        <img src={Logo} alt="" width="300px" height="200px" />
         <Form>
           <Form.Group
             controlId="username"
