@@ -41,7 +41,13 @@ const Landing = ({ modifyUsername, modifyBackground, username, ADDRESS }) => {
             Invalid Room Code or Username!
           </Alert>
         ) : null}
-        <img src={Logo} alt="" width="300px" height="200px" />
+        <img
+          src={Logo}
+          alt=""
+          width="200px"
+          height="150px"
+          style={{ marginBottom: "20px" }}
+        />
         <Form>
           <Form.Group
             controlId="username"
