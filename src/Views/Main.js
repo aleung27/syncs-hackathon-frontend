@@ -3,6 +3,10 @@ import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
 import "../scss/Main.scss";
 
+import sean from "../static/sean.png";
+import judd from "../static/judd.jpg";
+import eva from "../static/eva.jpg";
+
 const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
@@ -48,7 +52,7 @@ const Main = ({ username, ADDRESS }) => {
           ref.drawImage(img, data[i].x, data[i].y);
 
           // Draw the circle for us only
-          if (i == id) {
+          if (i === id) {
             // Note to alter the 15's when using diff images to centre
             ref.beginPath();
             ref.arc(data[i].x + 15, data[i].y + 15, 150, 0, 2 * Math.PI);
@@ -94,6 +98,24 @@ const Main = ({ username, ADDRESS }) => {
           border: "5px solid",
         }}
       ></canvas>
+      <div className="sidebar">
+        <div className="profile">
+          <img src={sean} alt="" />
+          <span className="userName">Sean Gong</span>
+        </div>
+        <div className="profile">
+          <img src={judd} alt="" />
+          <span className="userName">Sean Gong</span>
+        </div>
+        <div className="profile">
+          <img src={eva} alt="" />
+          <span className="userName">Sean Gong</span>
+        </div>
+        <div className="profile">
+          <img src={sean} alt="" />
+          <span className="userName">Sean Gong</span>
+        </div>
+      </div>
     </div>
   );
 };
