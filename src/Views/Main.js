@@ -1,44 +1,67 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { Redirect } from "react-router-dom";
+import "../scss/Main.scss";
 
 const Main = ({ username }) => {
-  const ADDRESS = "http://localhost:8000";
-  const [userPos, setUserPos] = useState(null);
+  const ADDRESS = "http://localhost:3030";
+  const WIDTH = 1200;
+  const HEIGHT = 800;
 
   useEffect(() => {
     const socket = io(ADDRESS);
+    let id = null;
+    const ref = document.getElementById("mainCanvas").getContext("2d");
 
-    socket.on("connect", () => {
-      console.log("connected");
-      socket.send({
-        user: username,
-        "position-x": 0,
-        "position-y": 0,
-      });
+    socket.on("id", (data) => (id = data));
+
+    // When receive position, render the images
+    socket.on("position", (data) => {
+      ref.clearRect(0, 0, WIDTH, HEIGHT);
+
+      for (let i = 0; i < data.length; i++) {
+        let img = new Image(5, 5);
+        img.src = "https://www.w3schools.com/images/lamp.jpg";
+
+        img.onload = () => {
+          ref.drawImage(img, data[i].x, data[i].y);
+        };
+      }
     });
 
-    socket.on("receive", (data) => {
-      setUserPos(data);
+    // Handle the key presses
+    document.addEventListener("keypress", (e) => {
+      console.log(id);
+      if (e.keyCode === 100) {
+        socket.emit("move", { id: id, direction: "right" });
+      }
+      if (e.keyCode === 97) {
+        socket.emit("move", { id: id, direction: "left" });
+      }
+      if (e.keyCode === 119) {
+        socket.emit("move", { id: id, direction: "up" });
+      }
+      if (e.keyCode === 115) {
+        socket.emit("move", { id: id, direction: "down" });
+      }
     });
 
     return () => {
       socket.disconnect();
+      document.removeEventListener("keypress");
     };
-  });
+  }, []);
 
   //if (!username) return <Redirect to="./" />;
 
   return (
-    <div>
+    <div className="main">
       <canvas
         id="mainCanvas"
-        width="600"
-        height="600"
+        width={WIDTH}
+        height={HEIGHT}
         style={{
-          marginLeft: "50px",
-          marginTop: "50px",
-          border: "1px solid",
+          border: "5px solid",
         }}
       ></canvas>
     </div>
