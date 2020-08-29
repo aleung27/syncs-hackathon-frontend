@@ -12,6 +12,9 @@ const Main = ({ username, ADDRESS }) => {
   const WIDTH = 1200;
   const HEIGHT = 800;
 
+  var users = [];
+  var images = [];
+
   useEffect(() => {
     const socket = io(ADDRESS);
     let id = null;
@@ -22,15 +25,27 @@ const Main = ({ username, ADDRESS }) => {
       socket.emit("setName", { username: username, id: id });
     });
 
+    // On new user connecting
+    socket.on("image", (data) => {
+      users = data;
+     
+      images = [];
+      for (var i = 0; i < data.length; i++) {
+        var tempimg = new Image(5, 5);
+        tempimg.src = users[i].userImg;
+        images.push(tempimg);
+      }
+      console.log(images)
+    })
+
     // When receive position, render the images
     socket.on("position", (data) => {
       ref.clearRect(0, 0, WIDTH, HEIGHT);
 
       for (let i = 0; i < data.length; i++) {
-        let img = new Image(5, 5);
-        img.src = "https://www.w3schools.com/images/lamp.jpg";
-
-        img.onload = () => {
+        let img = images[i];
+        console.log("Image" + i + "  " + img)
+        //img.onload = () => {
           if (data[i].username) {
             ref.font = "15px Raleway";
             ref.fillText(data[i].username, data[i].x, data[i].y - 5);
@@ -45,7 +60,7 @@ const Main = ({ username, ADDRESS }) => {
             ref.strokeStyle = "lightblue";
             ref.stroke();
           }
-        };
+        //};
       }
     });
 
