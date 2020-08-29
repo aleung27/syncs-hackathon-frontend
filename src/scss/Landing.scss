@@ -8,4 +8,17 @@
     background-color: silver;
 }
 
+
+.form-label {
+    padding: 20;
+    margin: auto;
+    margin-right: 30;
+    box-sizing: border-box;
+    font-family: "Raleway", sans-serif;
+    width: 100%;
+    font-size: 17px;
+    color: #4b4b4b;
+    line-height: 1.5;
+}
+
 @import '~bootstrap/dist/css/bootstrap.css';
