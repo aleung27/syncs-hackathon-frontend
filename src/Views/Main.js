@@ -68,7 +68,7 @@ const Main = ({ username, background, ADDRESS }) => {
 
     // Handle the key presses
     document.addEventListener("keypress", (e) => {
-      console.log(id);
+      console.log(e.keyCode );
       if (e.keyCode === 100) {
         socket.emit("move", { id: id, direction: "right" });
       }

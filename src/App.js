@@ -6,7 +6,7 @@ import Main from "./Views/Main";
 const App = () => {
   const [username, setUsername] = useState(null);
   const [background, setBackground] = useState("Hackathon");
-  const ADDRESS = "http://localhost:3030";
+  const ADDRESS = "https://192.168.1.70:3030";
 
   const modifyUsername = (val) => {
     setUsername(val);
